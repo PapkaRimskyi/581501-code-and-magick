@@ -30,7 +30,8 @@ var renderCloud = function (ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WEIGHT, CLOUD_HEIGHT);
 };
 
-var renderText = function (ctx, text, x, y) {
+var renderText = function (ctx, text, x, y, color) {
+  ctx.fillStyle = color;
   ctx.fillText(text, x, y);
 };
 
@@ -48,7 +49,7 @@ window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + CLOUD_INDENT, CLOUD_Y + CLOUD_INDENT, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
-  ctx.font = ('16px PT Mono');
+  ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
   ctx.fillStyle = '#000';
   var upperTextX = CLOUD_X + (CLOUD_INDENT * 2);
@@ -58,9 +59,8 @@ window.renderStatistics = function (ctx, names, times) {
   for (var i = 0; i <= names.length - 1; i++) {
     var coordinateX = BAR_START_X + (BAR_WIDTH * i) + (BAR_INDENT * i);
     var heightBar = (BAR_HEIGHT * times[i]) / maxTime;
-    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    renderText(ctx, names[i], coordinateX, TEXT_Y);
-    ctx.fillText(Math.round(times[i]), coordinateX, TIME_START_Y + heightBar);
+    renderText(ctx, names[i], coordinateX, TEXT_Y, 'rgba(0, 0, 0, 1)');
+    renderText(ctx, Math.round(times[i]), coordinateX, TIME_START_Y + heightBar, 'rgba(0, 0, 0, 1)');
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
