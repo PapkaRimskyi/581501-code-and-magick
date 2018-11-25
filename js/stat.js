@@ -13,8 +13,6 @@ var CLOUD_INDENT = 10;
 var BAR_INDENT = 50;
 // Отступ у текста
 var FONT_INDENT = 15;
-// Координата текста 'Вы' по x
-var TEXT_X = 140;
 // Координата текста 'Вы' по y
 var TEXT_Y = 255;
 // Начальная координата у первого столбца по x
@@ -30,6 +28,10 @@ var TIME_START_Y = BAR_START_Y - (FONT_INDENT + 3);
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WEIGHT, CLOUD_HEIGHT);
+};
+
+var renderText = function (ctx, text, x, y) {
+  ctx.fillText(text, x, y);
 };
 
 var getMaxElement = function (arr) {
@@ -49,20 +51,21 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.font = ('16px PT Mono');
   ctx.textBaseline = 'hanging';
   ctx.fillStyle = '#000';
-  ctx.fillText('Ура вы победили!', CLOUD_X + (CLOUD_INDENT * 2), CLOUD_Y + (CLOUD_INDENT * 2));
-  ctx.fillText('Список результатов:', CLOUD_X + (CLOUD_INDENT * 2), CLOUD_Y + (CLOUD_INDENT * 4));
+  var upperTextX = CLOUD_X + (CLOUD_INDENT * 2);
+  renderText(ctx, 'Ура вы победили!', upperTextX, CLOUD_Y + (CLOUD_INDENT * 2));
+  renderText(ctx, 'Список результатов:', upperTextX, CLOUD_Y + (CLOUD_INDENT * 4));
   var maxTime = getMaxElement(times);
   for (var i = 0; i <= names.length - 1; i++) {
-    var coordinatX = BAR_START_X + (BAR_WIDTH * i) + (BAR_INDENT * i);
+    var coordinateX = BAR_START_X + (BAR_WIDTH * i) + (BAR_INDENT * i);
     var heightBar = (BAR_HEIGHT * times[i]) / maxTime;
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    ctx.fillText(names[i], coordinatX, TEXT_Y);
-    ctx.fillText(Math.round(times[i]), coordinatX, TIME_START_Y + heightBar);
+    renderText(ctx, names[i], coordinateX, TEXT_Y);
+    ctx.fillText(Math.round(times[i]), coordinateX, TIME_START_Y + heightBar);
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'rgba(0, 0, ' + 256 * Math.random() + ', 1)';
     }
-    ctx.fillRect(coordinatX, BAR_START_Y, BAR_WIDTH, heightBar);
+    ctx.fillRect(coordinateX, BAR_START_Y, BAR_WIDTH, heightBar);
   }
 };
