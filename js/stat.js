@@ -52,33 +52,17 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура вы победили!', CLOUD_X + (CLOUD_INDENT * 2), CLOUD_Y + (CLOUD_INDENT * 2));
   ctx.fillText('Список результатов:', CLOUD_X + (CLOUD_INDENT * 2), CLOUD_Y + (CLOUD_INDENT * 4));
   var maxTime = getMaxElement(times);
-  var j = 2;
   for (var i = 0; i <= names.length - 1; i++) {
+    var coordinatX = BAR_START_X + (BAR_WIDTH * i) + (BAR_INDENT * i);
+    var heightBar = (BAR_HEIGHT * times[i]) / maxTime;
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.fillText(names[i], coordinatX, TEXT_Y);
+    ctx.fillText(Math.round(times[i]), coordinatX, TIME_START_Y + heightBar);
     if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-      ctx.fillText('Вы', TEXT_X, TEXT_Y);
-      ctx.fillText(Math.round(times[i]), TEXT_X, TIME_START_Y + (BAR_HEIGHT * times[i]) / maxTime);
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-      ctx.fillRect(BAR_START_X, BAR_START_Y, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
     } else {
-      ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-      ctx.fillText(names[i], TEXT_X + (BAR_INDENT * j - CLOUD_INDENT), TEXT_Y);
-      ctx.fillText(Math.round(times[i]), TEXT_X + (BAR_INDENT * j - CLOUD_INDENT), TIME_START_Y + (BAR_HEIGHT * times[i]) / maxTime);
       ctx.fillStyle = 'rgba(0, 0, ' + 256 * Math.random() + ', 1)';
-      ctx.fillRect(BAR_START_X + (BAR_INDENT * j - CLOUD_INDENT), BAR_START_Y, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
-      j += 2;
     }
+    ctx.fillRect(coordinatX, BAR_START_Y, BAR_WIDTH, heightBar);
   }
 };
-
-// ctx.fillRect(BAR_START_X, BAR_START_Y, BAR_WIDTH, BAR_HEIGHT, 'rgba(255, 0, 0, 1)');
-// ctx.fillText('Вы', TEXT_X, TEXT_Y);
-//
-// ctx.fillRect(BAR_START_X + (BAR_INDENT * 2 - CLOUD_INDENT), BAR_START_Y, BAR_WIDTH, BAR_HEIGHT);
-// ctx.fillText('Кекс', TEXT_X + (BAR_INDENT * 2 - CLOUD_INDENT), TEXT_Y);
-//
-// ctx.fillRect(BAR_START_X + (BAR_INDENT * 4 - CLOUD_INDENT), BAR_START_Y, BAR_WIDTH, BAR_HEIGHT);
-// ctx.fillText('Катя', TEXT_X + (BAR_INDENT * 4 - CLOUD_INDENT), TEXT_Y);
-//
-// ctx.fillText('Игорь', TEXT_X + (BAR_INDENT * 6 - CLOUD_INDENT), TEXT_Y);
-// ctx.fillRect(BAR_START_X + (BAR_INDENT * 6 - CLOUD_INDENT), BAR_START_Y, BAR_WIDTH, BAR_HEIGHT);
