@@ -37,7 +37,7 @@ for (var i = 0; i < 4; i++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = characterData[i].name;
   wizardElement.querySelector('.wizard-coat').style.fill = characterData[i].coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = characterData[i].coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = characterData[i].eyesColor;
   fragment.appendChild(wizardElement);
 }
 similarCharacterList.appendChild(fragment);
