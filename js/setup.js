@@ -7,7 +7,6 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template').c
 setupCharacter.classList.remove('hidden');
 similarCharacter.classList.remove('hidden');
 
-var characterData = [];
 var firstName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var secondName = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -18,7 +17,8 @@ var randomNumber = function (min, max) {
 };
 
 var getRandomSettings = function () {
-  for (var j = 0; j <= 3; j++) {
+  var characterData = [];
+  for (var i = 0; i < 4; i++) {
     var characterSettings = {};
     var firstNameIndex = randomNumber(0, firstName.length);
     var secondNameIndex = randomNumber(0, secondName.length);
@@ -35,25 +35,30 @@ var getRandomSettings = function () {
   return characterData;
 };
 
-var fragment = document.createDocumentFragment();
-
 var cloneTemplate = function () {
-  for (var h = 0; h < 4; h++) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-  }
+  var wizardElement = similarWizardTemplate.cloneNode(true);
   return wizardElement;
 };
 
 var getCharacter = function () {
-  getRandomSettings();
+  var characterData = getRandomSettings();
   for (var i = 0; i < 4; i++) {
     var wizardElement = cloneTemplate();
     wizardElement.querySelector('.setup-similar-label').textContent = characterData[i].name;
     wizardElement.querySelector('.wizard-coat').style.fill = characterData[i].coatColor;
     wizardElement.querySelector('.wizard-eyes').style.fill = characterData[i].eyesColor;
+  }
+  return wizardElement;
+};
+
+var icludeDomElement = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < 4; i++) {
+    var wizardElement = getCharacter();
     fragment.appendChild(wizardElement);
   }
   return fragment;
 };
-getCharacter();
-similarCharacterList.appendChild(fragment);
+
+icludeDomElement();
+similarCharacterList.appendChild(icludeDomElement());
