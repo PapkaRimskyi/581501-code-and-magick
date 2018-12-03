@@ -35,30 +35,22 @@ var getRandomSettings = function () {
   return characterData;
 };
 
-var cloneTemplate = function () {
+var getCharacter = function (characterData) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
+  wizardElement.querySelector('.setup-similar-label').textContent = characterData.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = characterData.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = characterData.eyesColor;
   return wizardElement;
 };
 
-var getCharacter = function () {
-  var characterData = getRandomSettings();
-  for (var i = 0; i < 4; i++) {
-    var wizardElement = cloneTemplate();
-    wizardElement.querySelector('.setup-similar-label').textContent = characterData[i].name;
-    wizardElement.querySelector('.wizard-coat').style.fill = characterData[i].coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = characterData[i].eyesColor;
-  }
-  return wizardElement;
-};
-
-var icludeDomElement = function () {
+var generationCharacter = function (characterData) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < 4; i++) {
-    var wizardElement = getCharacter();
+  for (var i = 0; i < characterData.length; i++) {
+    var wizardElement = getCharacter(characterData[i]);
     fragment.appendChild(wizardElement);
   }
   return fragment;
 };
 
-icludeDomElement();
-similarCharacterList.appendChild(icludeDomElement());
+var characterData = getRandomSettings();
+similarCharacterList.appendChild(generationCharacter(characterData));
