@@ -11,9 +11,9 @@ var setupUserNameInput = document.querySelector('.setup-user-name');
 var wizardCoat = document.querySelector('.setup-wizard .wizard-coat');
 var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
-var inputCoatColor = document.getElementsByName('coat-color');
-var inputEyesColor = document.getElementsByName('eyes-color');
-var inputFireballColor = document.getElementsByName('fireball-color');
+var inputCoatColor = document.querySelector('.coat-color');
+var inputEyesColor = document.querySelector('.eyes-color');
+var inputFireballColor = document.querySelector('.fireball-color');
 
 similarCharacter.classList.remove('hidden');
 
@@ -122,10 +122,10 @@ var changeColorCharacter = function (partOfWizardBody, color, inputName) {
     var randomColor = randomNumber(0, color.length);
     if (partOfWizardBody !== wizardFireball) {
       partOfWizardBody.style.fill = color[randomColor];
-      inputName[i].value = color[randomColor];
+      inputName.value = color[randomColor];
     } else {
       partOfWizardBody.style.backgroundColor = color[randomColor];
-      inputName[i].value = color[randomColor];
+      inputName.value = color[randomColor];
     }
   }
 };
