@@ -3,8 +3,11 @@ var setupCharacter = document.querySelector('.setup');
 var similarCharacter = document.querySelector('.setup-similar');
 var similarCharacterList = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
+var setupClose = setupCharacter.querySelector('.setup-close');
+var setupOpen = document.querySelector('.setup-open');
+var setupOpenIcon = setupOpen.querySelector('.setup-open-icon');
+var setupUserNameInput = document.querySelector('.setup-user-name');
 
-setupCharacter.classList.remove('hidden');
 similarCharacter.classList.remove('hidden');
 
 var firstName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
@@ -54,3 +57,57 @@ var generationCharacter = function (characterData) {
 
 var characterData = getRandomSettings();
 similarCharacterList.appendChild(generationCharacter(characterData));
+
+var ESC_KEYNUMBER = 27;
+var ENTER_KEYNUMBER = 13;
+
+var openPopup = function () {
+  setupCharacter.classList.toggle('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setupCharacter.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var onPopupEscPress = function (evt) {
+  var activeElement = document.activeElement;
+  if (evt.keyCode === ESC_KEYNUMBER) {
+    if (activeElement !== setupUserNameInput) {
+      closePopup();
+    }
+  }
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpenIcon.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYNUMBER) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYNUMBER) {
+    closePopup();
+  }
+});
+
+setupUserNameInput.addEventListener('invalid', function () {
+  if (setupUserNameInput.validity.tooShort) {
+    setupUserNameInput.setCustomValidity('Имя персонажа не может содержать менее 2 символов.');
+  } else if (setupUserNameInput.validity.tooLong) {
+    setupUserNameInput.setCustomValidity('Максимальная длина имени персонажа — 25 символов.');
+  } else if (setupUserNameInput.validity.valueMissing) {
+    setupUserNameInput.setCustomValidity('Обязательно для заполнения');
+  } else {
+    setupUserNameInput.setCustomValidity('');
+  }
+});
