@@ -76,6 +76,7 @@ var openPopup = function () {
 
 var closePopup = function () {
   setupCharacter.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
 };
 
 var onPopupEscPress = function (evt) {
@@ -117,17 +118,15 @@ setupUserNameInput.addEventListener('invalid', function () {
   }
 });
 
-var changeColorCharacter = function (partOfWizardBody, color, inputName) {
-  for (var i = 0; i < 1; i++) {
-    var randomColor = randomNumber(0, color.length);
-    if (partOfWizardBody !== wizardFireball) {
-      partOfWizardBody.style.fill = color[randomColor];
-      inputName.value = color[randomColor];
-    } else {
-      partOfWizardBody.style.backgroundColor = color[randomColor];
-      inputName.value = color[randomColor];
-    }
+var changeColorCharacter = function (elementOfWizardBody, color, inputName) {
+  var randomColor = randomNumber(0, color.length);
+  var elementColor = color[randomColor];
+  if (elementOfWizardBody !== wizardFireball) {
+    elementOfWizardBody.style.fill = elementColor;
+  } else {
+    elementOfWizardBody.style.backgroundColor = elementColor;
   }
+  inputName.value = elementColor;
 };
 
 wizardCoat.addEventListener('click', function () {
