@@ -143,12 +143,12 @@ wizardFireball.addEventListener('click', function () {
   changeColorCharacter(wizardFireball, fireballColor, inputFireballColor);
 });
 
-(function (moved, defaultCoords) {
+(function () {
   inputHandle.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    defaultCoords = {x: evt.clientX, y: evt.clientY};
+    window.defaultCoords = {x: evt.clientX, y: evt.clientY};
 
-    moved = false;
+    window.moved = false;
 
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
@@ -156,18 +156,22 @@ wizardFireball.addEventListener('click', function () {
 
   var mouseMove = function (evtMove) {
     evtMove.preventDefault();
-    moved = true;
-    var shift = {x: defaultCoords.x - evtMove.clientX, y: defaultCoords.y - evtMove.clientY};
-    defaultCoords = {x: evtMove.clientX, y: evtMove.clientY};
+    window.moved = true;
+    var shift = {x: window.defaultCoords.x - evtMove.clientX, y: window.defaultCoords.y - evtMove.clientY};
+    window.defaultCoords = {x: evtMove.clientX, y: evtMove.clientY};
     setupCharacter.style.top = (setupCharacter.offsetTop - shift.y) + 'px';
     setupCharacter.style.left = (setupCharacter.offsetLeft - shift.x) + 'px';
   };
 
   var mouseUp = function (evtUp) {
     evtUp.preventDefault();
+    ifWindowMoved();
     document.removeEventListener('mousemove', mouseMove);
     document.removeEventListener('mouseup', mouseUp);
-    if (moved) {
+  };
+
+  var ifWindowMoved = function () {
+    if (window.moved) {
       var onClickPreventDefault = function (onClickEvt) {
         onClickEvt.preventDefault();
         setupCharacter.removeEventListener('click', onClickPreventDefault);
