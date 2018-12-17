@@ -14,6 +14,7 @@ var wizardFireball = document.querySelector('.setup-fireball-wrap');
 var inputCoatColor = document.querySelector('.coat-color');
 var inputEyesColor = document.querySelector('.eyes-color');
 var inputFireballColor = document.querySelector('.fireball-color');
+var inputHandle = setupCharacter.querySelector('.upload');
 
 similarCharacter.classList.remove('hidden');
 
@@ -76,6 +77,7 @@ var openPopup = function () {
 
 var closePopup = function () {
   setupCharacter.classList.add('hidden');
+  setupCharacter.style = '';
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
@@ -140,3 +142,41 @@ wizardEyes.addEventListener('click', function () {
 wizardFireball.addEventListener('click', function () {
   changeColorCharacter(wizardFireball, fireballColor, inputFireballColor);
 });
+
+(function () {
+  var defaultCoords;
+  var moved;
+  inputHandle.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    defaultCoords = {x: evt.clientX, y: evt.clientY};
+
+    moved = false;
+
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);
+  });
+
+  var mouseMove = function (evtMove) {
+    evtMove.preventDefault();
+    moved = true;
+    var shift = {x: defaultCoords.x - evtMove.clientX, y: defaultCoords.y - evtMove.clientY};
+    defaultCoords = {x: evtMove.clientX, y: evtMove.clientY};
+    setupCharacter.style.top = (setupCharacter.offsetTop - shift.y) + 'px';
+    setupCharacter.style.left = (setupCharacter.offsetLeft - shift.x) + 'px';
+  };
+
+  var mouseUp = function (evtUp) {
+    evtUp.preventDefault();
+    if (moved) {
+      onClickPreventDefault(evtUp);
+      setupCharacter.addEventListener('click', onClickPreventDefault);
+    }
+    document.removeEventListener('mousemove', mouseMove);
+    document.removeEventListener('mouseup', mouseUp);
+  };
+
+  var onClickPreventDefault = function (onClickEvt) {
+    onClickEvt.preventDefault();
+    setupCharacter.removeEventListener('click', onClickPreventDefault);
+  };
+})();
