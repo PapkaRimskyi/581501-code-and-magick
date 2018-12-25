@@ -39,25 +39,13 @@
 (function () {
   var setupCharacter = document.querySelector('.setup');
   var form = setupCharacter.querySelector('.setup-wizard-form');
-  var getFormData = new FormData(form);
 
   form.addEventListener('submit', function (evt) {
-    window.save(getFormData, onLoad, onError);
+    window.save(new FormData(form), onLoad, window.errorHandler);
     evt.preventDefault();
   });
 
   var onLoad = function () {
     setupCharacter.classList.add('hidden');
-  };
-
-  var onError = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'width: 250px; margin: 0 auto; text-align: center; background-color: green; z-index: 100;';
-    node.style.position = 'adsolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '25px';
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
   };
 })();
