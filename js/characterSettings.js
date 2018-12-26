@@ -35,3 +35,17 @@
     changeColorCharacter(wizardFireball, fireballColor, inputFireballColor);
   });
 })();
+
+(function () {
+  var setupCharacter = document.querySelector('.setup');
+  var form = setupCharacter.querySelector('.setup-wizard-form');
+
+  form.addEventListener('submit', function (evt) {
+    window.save(new FormData(form), onLoad, window.errorHandler);
+    evt.preventDefault();
+  });
+
+  var onLoad = function () {
+    setupCharacter.classList.add('hidden');
+  };
+})();
