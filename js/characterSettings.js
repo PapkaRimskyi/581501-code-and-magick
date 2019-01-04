@@ -8,32 +8,47 @@
   var inputEyesColor = document.querySelector('.eyes-color');
   var inputFireballColor = document.querySelector('.fireball-color');
 
-  var fireballColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-  var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
+  var COLOR_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var COLOR_COAT = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var COLOR_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
+
+  var wizard = {
+    onCoatChange: function () {},
+    onEyesChange: function () {},
+    onFireballChange: function () {}
+  };
 
   var changeColorCharacter = function (elementOfWizardBody, color, inputName) {
     var randomColor = window.randomNumber(0, color.length);
     var elementColor = color[randomColor];
-    if (elementOfWizardBody !== wizardFireball) {
+    if (elementOfWizardBody === wizardCoat) {
       elementOfWizardBody.style.fill = elementColor;
-    } else {
+      window.wizard.onCoatChange(elementColor);
+    }
+    if (elementOfWizardBody === wizardEyes) {
+      elementOfWizardBody.style.fill = elementColor;
+      window.wizard.onEyesChange(elementColor);
+    }
+    if (elementOfWizardBody === wizardFireball) {
       elementOfWizardBody.style.backgroundColor = elementColor;
+      window.wizard.onFireballChange(elementColor);
     }
     inputName.value = elementColor;
   };
 
   wizardCoat.addEventListener('click', function () {
-    changeColorCharacter(wizardCoat, coatColor, inputCoatColor);
+    changeColorCharacter(wizardCoat, COLOR_COAT, inputCoatColor);
   });
 
   wizardEyes.addEventListener('click', function () {
-    changeColorCharacter(wizardEyes, eyesColor, inputEyesColor);
+    changeColorCharacter(wizardEyes, COLOR_EYES, inputEyesColor);
   });
 
   wizardFireball.addEventListener('click', function () {
-    changeColorCharacter(wizardFireball, fireballColor, inputFireballColor);
+    changeColorCharacter(wizardFireball, COLOR_FIREBALL, inputFireballColor);
   });
+
+  return window.wizard === wizard;
 })();
 
 (function () {
