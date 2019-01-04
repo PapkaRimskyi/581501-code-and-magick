@@ -5,6 +5,8 @@
   var similarCharacterList = document.querySelector('.setup-similar-list');
   var setupSimilar = document.querySelector('.setup-similar');
 
+  var COUNT_OF_SIMILAR_WIZARDS = 4;
+
   var getCharacter = function (characterData) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = characterData.name;
@@ -16,7 +18,7 @@
   window.renderMage = function (wizards) {
     var fragment = document.createDocumentFragment();
     similarCharacterList.innerHTML = '';
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < COUNT_OF_SIMILAR_WIZARDS; i++) {
       var wizardElement = getCharacter(wizards[i]);
       fragment.appendChild(wizardElement);
     }
